@@ -1,6 +1,5 @@
-import heapq
-import random
 import sys
+import heapq
 from MineSweeperBoard import MineSweeperBoard
 
 class Player_H1:
@@ -54,6 +53,16 @@ class Player_H1:
                         ny = j + y
                         if 0 <= nx < self.m_Width and 0 <= ny < self.m_Height:
                             self.update_cell(nx, ny)
+
+    def next_play_with_probabilities(self):
+        min_prob = 1.1
+        min_cell = None
+        for prob, (i, j) in self.m_Probabilities:
+            if not self.m_Mines[i][j] and self.m_Count[i][j] == 9:
+                if prob < min_prob:
+                    min_prob = prob
+                    min_cell = (i, j)
+        return min_cell
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
